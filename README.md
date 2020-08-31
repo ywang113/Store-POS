@@ -1,6 +1,14 @@
 # Store Point of Sale
- Desktop Point of Sale app built with electron
- 
+ Desktop Point of Sale app built with electron\
+
+  **Modified:**
+ Modified to PHP version by Boguss\
+ - dollar version
+ - using MySQL
+ - using XAMPP
+ - settlement print it added ( settlement = from 17:00 to next day 16:59)
+
+
   **Features:**
 
 - Can be used by multiple PC's on a network with one central database.
@@ -17,6 +25,8 @@
 
  **To use on Windows:**
  [Download](http://www.storepointofsale.com/download/v1/StorePOS.msi) the MSI Installer
+
+The default username and password is  **admin**
 
   **Looking for a Desktop Invoicing app?**
   
