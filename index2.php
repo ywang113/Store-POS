@@ -13,6 +13,16 @@
     <link href="assets/plugins/dataTables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/dataTables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />    
     <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./assets/js/poscontroll.js"></script>
+    <?php
+    include('functions.php');
+    if(isset($_GET['error']))
+                {
+                  $errormessage=$_GET['error'];
+                  //show error message using javascript alert
+                  echo "<script>alert('$errormessage'); window.location = './index2.php';</script>";
+                }
+    ?>
     </head>
   <body>
     
@@ -23,7 +33,7 @@
         <div class="row">
                 <div class="col-sm-12">
 
-                             <div class="button-list pull-left m-t-15 m-l-10">  
+                    <div class="button-list pull-left m-t-15 m-l-10">  
                         
                             <div class="btn-group p_one">
                             <button id="productModal" data-toggle="modal" data-target="#Products" type="button" class="btn btn-default waves-effect waves-light">
@@ -47,7 +57,7 @@
                                     <span class="btn-label"><i class="fa fa-shopping-basket"></i> </span> Open Tabs
                             </button>
             
-                            <button id="viewCustomerOrders" data-toggle="modal" data-target="#customerModal" type="button" onclick="$(this).getCustomerOrders()" class="btn btn-info waves-effect waves-light">
+                            <button id="viewCustomerOrders" data-toggle="modal" data-target="#customerModal" type="button" class="btn btn-info waves-effect waves-light">
                                     <span class="btn-label"><i class="fa fa-user"></i> </span> Customer Orders
                             </button>
                         
@@ -56,13 +66,13 @@
 
 
                     
-                    <img  class="loading m-t-5" style="margin-left: 35%" height="50px" src="assets/images/loading.gif" alt="">
+                    <!--img  class="loading m-t-5" style="margin-left: 35%" height="50px" src="assets/images/loading.gif" alt=""-->
 
                     <div class="button-list pull-right m-t-15 m-l-10">  
 
                             <button id="settings" data-toggle="modal" data-target="#settingsModal"  type="button"  class="btn btn-default waves-effect waves-light p_five">
                                 <i class="glyphicon glyphicon-cog"></i>
-                          </button>
+                            </button>
 
                             <button id="transactions" type="button" class="btn btn-default waves-effect waves-light p_three">
                             <span class="btn-label"><i class=" 	glyphicon glyphicon-credit-card"></i> </span>  Transactions 
@@ -79,15 +89,15 @@
                                 <button id="add-user" data-toggle="modal"   type="button" class="btn btn-dark waves-effect waves-light">
                                         <i class="fa fa-plus"></i> 
                                 </button>
-                             </div>
+                            </div>
 
 
                             <button type="button"  class="btn btn-light waves-effect waves-light" id="cashier">
                                 <span class="btn-label"><i class="glyphicon glyphicon-user"></i> </span> <span id="loggedin-user"></span>
-                         </button>
+                            </button>
 
-                            <button id="log-out"  type="button"  class="btn btn-warning waves-effect waves-light">
-                                    <i class="glyphicon glyphicon-log-out"></i>
+                            <button id="log-out" onClick="window.location.href='index2.php'" type="button"  class="btn btn-warning waves-effect waves-light">
+                                    <i class="glyphicon glyphicon-refresh"></i>
                             </button>
             
             
@@ -107,6 +117,7 @@
                 <div class="card-box"> 
                     <div class="row">               
                         <h3 class="col-md-2">Transactions</h3> 
+                        <!--
                         <div class="col-md-1">
                             <span>Till</span>
                             <select id="tills" class="form-control">                              
@@ -124,11 +135,14 @@
                                 <option value="0">Unpaid</option>
                             </select>
                         </div>
+                        -->
                         <div class="col-md-3">
                             <span style="width: 100%;">Date</span>
                             <div id="reportrange">
                                 <i class="fa fa-calendar"></i>&nbsp;
-                                <span></span> <i class="fa fa-caret-down"></i>
+                                <span>
+                                  <input type="text" name="datefilter" value="" />
+                                </span>
                             </div>
                         </div>
                     </div>   
@@ -146,11 +160,13 @@
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Sold</th>
-                                                        <th>Available</th> 
-                                                        <th>Sales</th>                                                                                                           
+                                                        <th>Price</th> 
+                                                        <th>Sales</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="product_sales"></tbody>
+                                                <tbody id="product_sales">
+                                                	<?php listSold(); ?>
+                                                </tbody>
                                             </table>
                                     </div>
                                     <div class="col-md-4" id="totals">
@@ -159,22 +175,30 @@
                                     
                                             <div id="total_sales" class="btn-success">
                                                 <h5>SALES</h5>
-                                                <div id="counter">0</div>
+                                                <div id="counter">$ 
+                                                	<?php showTotalSales(); ?>
+                                                </div>
                                             </div>
                                        
                                             <div id="total_transactions" class="btn-warning">
                                                 <h5>TRANSACTIONS</h5>
-                                                <div id="counter">0</div>
+                                                <div id="counter">
+                                                	<?php showTotalTransaction(); ?>
+                                                </div>
                                             </div>
                                 
                                             <div id="total_items" class="btn-info">
                                                 <h5>ITEMS</h5>
-                                                <div id="counter">0</div>
+                                                <div id="counter">
+                                                	<?php showTotalItems(); ?>
+                                                </div>
                                             </div>
 
                                             <div id="total_products" class="btn-default">
                                                 <h5>PRODUCTS</h5>
-                                                <div id="counter">0</div>
+                                                <div id="counter">
+                                                	<?php showTotalProducts(); ?>
+                                                </div>
                                             </div>
                                                                          
                                     </div>
@@ -185,7 +209,7 @@
                            <div class="col-md-7">
                             <table class="table tablesaw-enhanced" id="transactionList">
                                 <thead>
-                                    <tr>                                                                      
+                                    <tr>            
                                         <th>Invoice</th>                                      
                                         <th>Date</th>
                                         <th>Total</th>
@@ -193,11 +217,12 @@
                                         <th>Change</th>
                                         <th>Method</th>
                                         <th>Till</th>
-                                        <th>Cashier</th>
-                                        <th>View</th>
+                                        <th><i class="fa fa-print"></i></th>
                                     </tr>
                                 </thead>
-                                <tbody id="transaction_list"></tbody>
+                                <tbody id="transaction_list">
+                                	<?php listTransaction(); ?>
+                                </tbody>
                             </table>
                         </div>
 
@@ -215,17 +240,18 @@
                   <div class="col-md-12">
                       <div class="row">
                           <div class="col-md-10">
-                              <select name="" id="customer" class="form-control">
-                          </select>
+                              <select name="" id="customer" class="form-control"><?php
+                              optionCustomer();
+                            ?></select>
                           </div>
                           <div class="col-md-2">
                               <button data-toggle="modal" data-target="#newCustomer" class="btn btn-success"><i class="fa fa-plus"></i></button>
                           </div>
                       </div>
                       <div class="input-group m-t-5">
-                          <form action="" id="searchBarCode">
-                              <input type="text" required id="skuCode" name="skuCode" class="form-control" placeholder="Scan barcode or type the number then hit enter" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                              <input type="submit" style="display:none;">
+                          <form id="searchBarCode" action="scanBarcode.php">
+                              <input type="text" required id="skuCode" name="skuCode" class="form-control" placeholder="Scan barcode or type the number then hit enter" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off" autofocus>
+                              <input type="submit" id="scansubmit" style="display:none;">
                           </form>
                           <span class="input-group-addon" id="basic-addon2">
                               <i class="glyphicon glyphicon-ok"></i>
@@ -239,16 +265,15 @@
                           <tr>
                               <th>#</th>
                               <th width="150px">Item</th>
-                              <th width="170px">Qty</th>
+                              <th width="100px">Qty</th>
                               <th>Price</th>
                               <th width="5px">
-                                  <button onclick="$(this).cancelOrder()" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button>
+                                  <button data-toggle="modal" data-target="#cancelcart" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button>
                               </th>
                           </tr>
                           </thead>
                           <tbody>
-  
-  
+                          	<?php listCart(); ?>
                           </tbody>
   
                       </table>
@@ -258,34 +283,38 @@
                  <div class="m-t-5">
                      <div class="row">
                          <div class="col-md-3">Total Item(s)</div>
-                         <div class="col-md-3">: <sapn id="total">0</sapn></div>
+                         <div class="col-md-3">: <sapn id="total"><?php
+                            calculateitems();?></sapn></div>
                          <div class="col-md-3">Price :</div>
-                         <div class="col-md-3">: <span id="price">0.0</span></div>
+                         <div class="col-md-3">$ <span id="price"><?php
+                            calculateprice();?></span></div>
                      </div>
                      <div class="row">
-                         <div class="col-md-3">Discount</div>
-                         <div class="col-md-3"><input class="form-control" type="number" id="inputDiscount" oninput="$(this).calculateCart();"></div>
-                         <div class="col-md-3">Gross Price (inc <span id="taxInfo"></span>% Tax)</div>
-                         <div class="col-md-3"><h3 id="gross_price">0.00</h3></div>
+                         
+                        <div class="col-md-3">Gross Price</div>
+                        <div class="col-md-3"><h3 id="gross_price">$ 
+                         	<?php calculategross();?>
+                         </h3>
+                     	</div>
                      </div>
   
                  </div>
   
                   <div class="button-list pull-right">
 
-                    <button onclick="$(this).submitDueOrder(3);" type="button" class="btn btn-info waves-effect waves-light">
+                    <button data-toggle="modal" data-target="#orderModal"  type="button" class="btn btn-info waves-effect waves-light">
                         <i class="fa fa-print"></i> 
                     </button>
 
-                      <button  onclick="$(this).cancelOrder()" type="button" class="btn btn-danger waves-effect waves-light">
+                      <button  data-toggle="modal" data-target="#cancelcart" type="button" class="btn btn-danger waves-effect waves-light">
                           <span class="btn-label"><i class="fa fa-ban"></i></span>Cancel
                       </button>
   
-                      <button type="button" id="hold" class="btn btn-default waves-effect waves-light">
+                      <button type="button" id="hold" data-toggle="modal" data-target="#dueModal" class="btn btn-default waves-effect waves-light">
                           <span class="btn-label"><i class="fa fa-hand-paper-o"></i></span>Hold
                       </button>
   
-                      <button type="button" id="payButton" class="btn btn-success waves-effect waves-light">
+                      <button type="button" id="payButton" data-toggle="modal" data-target="#paymentModel" class="btn btn-success waves-effect waves-light" onclick="setPaymentmodelPrice();">
                           <span class="btn-label"><i class="fa fa-money"></i></span>Pay
                       </button>
                   </div>
@@ -296,18 +325,24 @@
           <div class="col-md-8">
               <div class="card-box">
                   <div class="row">
+                  	<!--
                       <div class="col-md-4">
                           <input type="text" id="search" class="form-control" placeholder="Search product by name or sku">
                       </div>
+                    -->
                       <div class="col-md-8">
-                          <div class="" id="categories">
-                              
+                          <div class="button-list pull-left m-t-15 m-l-10" id="categories">
+								<div class="category btn-group" role="group" aria-label="..." >
+                              		<?php categorybutton(); ?>
+                              	</div>
                           </div>
                       </div>
                   </div>
                   <hr>
                   <div class="row" id="parent"> 
-                      
+                    
+                      <?php allMenu(); ?>
+                     
                   </div>
   
               </div>
@@ -396,85 +431,21 @@
                   <div class="row">
                       <div class="col-md-4">
                           <div class="list-group">
-                              <a href="javascript:void(0)" id="cash" onclick="paymentType = 1" class="list-group-item active">
+                              <a href="javascript:void(0)" id="cash" onclick="methodchange2cash()" class="list-group-item active">
                                   Cash
                               </a>
-                            <a href="javascript:void(0)" id="card" onclick="paymentType = 3" class="list-group-item">Card</a>
+                            <a href="javascript:void(0)" id="card" onclick="methodchange2card()" class="list-group-item">Card</a>
                           </div>
                       </div>
                       <div class="col-md-8">
-                          <div class="input-group">
+                          <div class="input-group" onclick="priceCopy()">
                               <span class="input-group-addon" id="basic-addon3">Price <span id="price_curr"></span>
-                              <input id="payablePrice" readonly type="number"  class="form-control" aria-describedby="basic-addon3">
+                              <input id="payablePrice" readonly type="text" class="form-control" aria-describedby="basic-addon3" value="0.0">
                           </div>
                           <br>
                           <div class="input-group">
                               <span class="input-group-addon" id="basic-addon3">Payment  <span id="payment_curr"></span> </span>
-                              <input type="text" placeholder="0.0" class="form-control" id="payment" aria-describedby="basic-addon3">
-                          </div>
-                          <hr>
-                          <div class="row">
-                              <div class="col-md-9">
-                                  <div class="row">
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(1,false);" class="btn btn-success btn-lg btn-block">1</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(2,false);" class="btn btn-success btn-lg btn-block">2</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(3,false);" class="btn btn-success btn-lg btn-block">3</button>
-                                      </div>
-                                      <div class="col-md-3"></div>
-                                  </div>
-                                  <br>
-                                  <div class="row">
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(4,false);" class="btn btn-success btn-lg btn-block">4</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(5,false);" class="btn btn-success btn-lg btn-block">5</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(6,false);" class="btn btn-success btn-lg btn-block">6</button>
-                                      </div>
-                                      <div class="col-md-3"></div>
-                                  </div>
-                                  <br>
-                                  <div class="row">
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(7,false);" class="btn btn-success btn-lg btn-block">7</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(8,false);" class="btn btn-success btn-lg btn-block">8</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(9,false);" class="btn btn-success btn-lg btn-block">9</button>
-                                      </div>
-                                      <div class="col-md-3"></div>
-                                  </div>
-                                  <br>
-                                  <div class="row">
-                                      <div class="col-md-3">
-                                          <button onclick="$('#payment').val($('#payment').val().substr(0,$('#payment').val().length -1));$(this).calculateChange();" class="btn btn-success btn-lg btn-block">⌫</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).go(0,false);" class="btn btn-success btn-lg btn-block">0</button>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button onclick="$(this).digits()" class="btn btn-success btn-lg btn-block">.</button>
-                                      </div>
-                                      <div class="col-md-3"></div>
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <button onclick="$('#payment').val('');$(this).calculateChange();" class="btn btn-danger btn-block btn-lg">AC</button>
-                              </div>
-                          </div>
-                          <br>
-                          <div class="input-group" id="cardInfo">
-                              <span class="input-group-addon" id="basic-addon3">Card Info </span>
-                              <input type="text" class="form-control" id="paymentInfo" aria-describedby="basic-addon3">
+                              <input type="text" placeholder="0.0" class="form-control" id="payment" aria-describedby="basic-addon3" onchange="calculatechange()" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                           </div>
                       </div>
                   </div>
@@ -485,7 +456,13 @@
                         <div class="btn btn-primary btn-block btn-lg waves-effect waves-light">Change <span id="change_curr"></span><span id="change"></span> </div>
                       </div>
                       <div class="col-md-6">
-                        <button type="button" id="confirmPayment" class="btn btn-default btn-block btn-lg waves-effect waves-light">Confirm Payment</button>
+                        <form action="confirmPayment.php" method="post">
+                          <input type="hidden" id="confirmgross_price" name="confirmgross_price">
+                          <input type="hidden" id="confirmgivenamount" name="confirmgivenamount">
+                          <input type="hidden" id="confirmchange" name="confirmchange">
+                          <input type="hidden" id="confirmmethod" name="confirmmethod" value="cash">
+                        <input type="submit" id="confirmPayment" class="btn btn-default btn-block btn-lg waves-effect waves-light" value="Confirm Payment">
+                        </form>
                     </div>
                   </div>
                   
@@ -505,7 +482,7 @@
                   </h4>
               </div>
               <div class="modal-body">
-                  <form id="saveCustomer" data-parsley-validate>
+                  <form id="saveCustomer" action="newCustomer.php" data-parsley-validate>
                       <div class="form-group">
                           <label for="userName">Customer Name*</label>
                           <input type="text" required="required"  name="name" parsley-trigger="change" placeholder="Enter name" class="form-control" id="userName">
@@ -542,17 +519,23 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <form id="saveProduct" encType="multipart/form-data">
+                    <form id="saveProduct" encType="multipart/form-data" action="newProduct.php">
                         <input type="hidden" name="id" id="product_id">
                         <input type="hidden" name="img" id="img">
                         <input type="hidden" name="remove" id="remove_img">
                         <div class="form-group">
                             <label for="userName">Category</label>
-                            <select name="category" class="form-control" id="category"></select>
+                            <select name="category" class="form-control" id="category">
+                            	<?php optionCategory(); ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="userName">Product Name</label>
                             <input type="text" required="required"  name="name" parsley-trigger="change" placeholder="Enter a product name" class="form-control" id="productName">
+                        </div>
+                        <div class="form-group">
+                            <label for="userName">Barcode</label>
+                            <input type="text" name="barcode" placeholder="Scan barcode" class="form-control" id="product_barcode">
                         </div>
                         <div class="form-group">
                             <label for="userName">Price</label>
@@ -563,7 +546,7 @@
                             <input type="text" name="quantity" placeholder="Available stock" class="form-control" id="quantity">
                         </div>
                         <div class="form-group">
-                            <label><input type="checkbox" name="stock" id="stock" style="max-width: 30px; float: left;">  Disable stock check </label>
+                            <label><input type="checkbox" name="stock" id="stock" style="max-width: 30px; float: left;"> <-- GST 10%</label>
                         </div>
                         <div class="form-group">
                             <label for="userName"><span id="rmv_img" class="btn btn-xs btn-warning">Remove</span> Picture </label>                      
@@ -589,21 +572,40 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form id="saveCategory">
+                        <form id="saveCategory" action="newCategory.php">
                             <div class="form-group">
                                 <label for="userName">Name</label>
                                 <input id="category_id" type="hidden" name="id">
                                 <input id="categoryName" type="text" required="required"  name="name" placeholder="Enter a category name" class="form-control" >
                             </div>
                           
-                            <input type="submit" id="submitCategory" class="btn btn-primary btn-block waves-effect waves-light">
+                            <input type="submit" value="submit" id="submitCategory" class="btn btn-primary btn-block waves-effect waves-light">
                         </form>
                     </div>
                </div>
           </div>
      </div>
 
-
+     <div id="cancelcart" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="mySmallModalLabel">Cancel
+                            <img  class="loading m-t-5" style="margin-left: 35%" height="50px" src="assets/images/loading.gif" alt="">
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="cancelcartform" action="cancelcart.php">
+                            <div class="form-group">
+                                <label>Do you really want to cancel the order?</label>
+                            </div>
+                            <input type="submit" value="Yes" id="submitcancelcart" class="btn btn-primary btn-block waves-effect waves-light">
+                        </form>
+                    </div>
+               </div>
+          </div>
+     </div>
 
      <div id="Products" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-lg">
@@ -619,16 +621,16 @@
                         <table class="table table-bordered" id="productList">
                             <thead>
                                 <tr>                                                                      
-                                    <th>Barcode</th>
-                                    <th>Item</th>
                                     <th>Name</th>                                      
+                                    <th>Category</th>
                                     <th>Price</th>
                                     <th>Stock</th>
-                                    <th>Category</th>
+                                    <th>Barcode</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="product_list"></tbody>
+                            <tbody id="product_list">
+                            	<?php listProduct(); ?></tbody>
                         </table>
 
                     </div>
@@ -651,14 +653,16 @@
                  <div class="modal-body" id="all_userss" style="padding: 20px; padding-right: 40px;"> 
                     <table class="table table-bordered" id="userList">
                         <thead>
-                            <tr>                                                                      
+                            <tr>    
                                 <th>Name</th>                                      
                                 <th>Username</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="user_list"></tbody>
+                        <tbody id="user_list">
+                        	<?php listUser(); ?>
+                       	</tbody>
                     </table>
 
                 </div>
@@ -686,7 +690,8 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="category_list"></tbody>
+                            <tbody id="category_list">
+                            	<?php listCategory(); ?></tbody>
                         </table>
 
                     </div>
@@ -695,7 +700,7 @@
      </div>
 
 
-
+     <!--
      <div id="userModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -754,6 +759,7 @@
            </div>
       </div>
  </div>
+-->
 
 
 
@@ -801,23 +807,23 @@
     </div>
 </div>
 
-
-
-
 <div id="orderModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="btn btn-sm btn-default" onclick="$(this).print()">Print</button> <br> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              </div>
-            <div class="modal-body" id="viewTransaction">                 
+                <button class="btn btn-sm btn-default" onclick="printdiv('viewTransaction');">Print</button> <br> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" id="viewTransaction">
+            	<?php printreceipt(); ?>
             </div>
 
-            <div class="alert alert-danger" style="font-size:11px;">Right-Click and Reload if you get stuck after cancelling a print.</div>
+            <div class="modal-header">
+                <button class="btn btn-lg btn-default" data-dismiss="modal" onclick="printdiv('viewTransaction');"><i class="fa fa-print"></i>Print</button>
+                <button class="btn btn-lg btn-warning pull-right" data-dismiss="modal">close</button>
+            </div>
         </div>
     </div>
 </div>
-
 
      <div id="settingsModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
@@ -835,11 +841,9 @@
                         <label for="app">Application</label>
                         <select name="app" id="app" class="form-control">
                             <option>Standalone Point of Sale</option>
-                            <option>Network Point of Sale Terminal</option>
-                            <option>Network Point of Sale Server</option>                                            
                         </select>
                  </div>
-
+                 <!--
                 <form id="net_settings_form">
                  <div class="row">
                     <div class="form-group">
@@ -865,7 +869,7 @@
                     </div>
                  </div>
                 </form>
-              
+                -->
 
 
                  <form id="settings_form" encType="multipart/form-data">
@@ -942,19 +946,129 @@
           </div>
      </div>
 
+<div id="calculatorModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<h3>Calculate Price</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              </div>
+            <div class="modal-body" id="calculatorbody" name="calculatorbody"> 
+            	<input type="hidden" name="selectedcalitem" id="selectedcalitem">
+            	<table border="1">
+			        <tr>
+			            <td colspan="4">
+			                <input type="text" id="display" style="width:240px;font-size:30px;">
+			            </td>
+			        </tr>
+			        <tr>
+			            <td colspan="4">
+			                <input type="text" id="result" value="$ 0" style="width:240px;font-size:30px;">
+			            </td>
+			        </tr>
+			        <tr>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(7)" id="calculator_btn1">7</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(8)" id="calculator_btn1">8</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(9)" id="calculator_btn1">9</td>
+			            <td type="button" class="btn btn-warning waves-effect waves-light" onclick="subtract()" id="calculator_btn1">⌫</td>
+			        </tr>
+			        <tr>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(4)" id="calculator_btn1">4</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(5)" id="calculator_btn1">5</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(6)" id="calculator_btn1">6</td>
+			            <td type="button" class="btn btn-default waves-effect waves-light" onclick="add('*')" id="calculator_btn1">*</td>
+			        </tr>
+			        <tr>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(1)" id="calculator_btn1">1</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(2)" id="calculator_btn1">2</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(3)" id="calculator_btn1">3</td>
+			            <td type="button" class="btn btn-default waves-effect waves-light" onclick="add('+')" id="calculator_btn1">+</td>
+			        </tr>
+			        <tr>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add(0)" id="calculator_btn1">0</td>
+			            <td type="button" class="btn btn-success waves-effect waves-light" onclick="add('.')" id="calculator_btn1">.</td>
+			            <td type="button" class="btn btn-danger waves-effect waves-light" onclick="reset()" id="calculator_btn1">AC</td>
+			            <td type="button" class="btn btn-primary waves-effect waves-light" onclick="submitcalculator()" id="calculator_btn1">OK</td>
+			        </tr>
+			    </table>
+			    <div class="modal-footer">
+                  <button type="button" onclick="submitcalculator()" class="btn btn-primary btn-block btn-lg waves-effect waves-light">OK</button>
+              	</div>
+
+			    <script>
+			    	var numberClicked = false; // 전역 변수로 numberClicked를 설정
+			        function add (char) {
+				        if(numberClicked == false) { // 만약 이전에 연산자를 입력 했는데,
+				            if(isNaN(char) == true) { // 입력 받은 값이 또 다시 연산자면,
+				                document.getElementById('display').value = document.getElementById('display').value.slice(0,-1);
+				                document.getElementById('display').value += char;
+				            } else { // 연산자가 아니라면!
+				                document.getElementById('display').value += char; // 식 뒤에 값을 추가한다.
+				                calculate();
+				            }
+				        } else { // 만약에 이전에 숫자를 입력 했으면,
+				            document.getElementById('display').value += char; // 식 뒤에 값을 추가한다.				        	
+				            if(isNaN(char) == false) { // 입력 받은 값이 숫자면,
+				                calculate(); // 실시간계산
+				            }
+				        }
+				 
+				        // 다음 입력을 위해 이번 입력에 숫자가 눌렸는지 연산자가 눌렸는지 설정한다.
+				        if(isNaN(char) == true) { // "만약 숫자가 아닌게 참이라면" = "연산자를 눌렀다면"
+				            numberClicked = false; // numberClicked를 false로 설정한다.
+				        } else {
+				            numberClicked = true; // numberClicked를 true로 설정한다.
+				        }
+				    }
+
+				    function subtract () {
+				    	if(isNaN(document.getElementById('display').value.slice(0,-1))){// 만약 연산자를 지웠을경우
+				    		numberClicked = true; 
+				    	}
+				        document.getElementById('display').value = document.getElementById('display').value.slice(0,-1);
+				    }
+
+			        function calculate() {
+			            var display = document.getElementById('display');
+			            var result = eval(display.value); // 식을 계산하고 result 변수에 저장합니다.
+			            document.getElementById('result').value = "$ "+result.toFixed(2);
+			        }
+
+			        function reset() {
+			            document.getElementById('display').value = "";
+			            document.getElementById('result').value = "$ ";
+			        }
+
+			        function submitcalculator() {
+			        	var calculatedResult = document.getElementById('result').value.slice(2);
+			        	var productname = document.getElementById('selectedcalitem').value;
+			        	console.log(productname+"- submitcalculator:"+calculatedResult);
+			        	reset();
+
+			        	$.ajax({
+				          type: "POST",
+				          url: "addtakeawaytocart.php",
+				          data: { name:productname, price: calculatedResult }
+				        }).done(function( msg ) {
+				          location.reload();
+				          //alert( "Data Saved: " + msg );
+				        });
+			        }
+			    </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
   </div>
 
 </div>
-
-<script> window.$ = window.jQuery = require('jquery'); </script>
-
-<script> 
-
-
-require('./renderer.js');
-
-    </script>
-
+<script src="assets/plugins/jquery/jquery-3.5.1.min.js"></script>
+    <!-- add library tabledit-->
+    <script src="assets/plugins/tabledit/jquery.tabledit.js"></script>
+    <script src="assets/plugins/tabledit/jquery.tabledit.min.js"></script>
+    
     <script src="assets/plugins/bootstrap/bootstrap.min.js"></script>
     <script src="assets/plugins/chosen/chosen.jquery.min.js"></script>
     <script src="assets/plugins/jquery-ui/jquery.form.min.js"></script>
@@ -968,6 +1082,201 @@ require('./renderer.js');
 
     
     <script>
+      //Payment confirmation modal function
+      function RoundTo(number, roundto){
+		  return roundto * Math.round(number/roundto);
+	  }
+
+      function setPaymentmodelPrice(){
+        var gross_price = document.getElementById('gross_price').innerHTML;
+        gross_price= parseFloat(gross_price.slice(1));
+        document.getElementById("payablePrice").value = "$ "+RoundTo(gross_price,0.05).toFixed(2);
+      }
+
+      function calculatechange(){
+        var gross_price = document.getElementById("payablePrice").value;
+        var givenamount = document.getElementById('payment').value;
+
+        givenamount = parseFloat(givenamount);
+        gross_price = parseFloat(gross_price.substr(1));
+
+        var change = givenamount-gross_price;
+        document.getElementById("change").innerHTML = "$ "+ RoundTo(change,0.05).toFixed(2);
+        document.getElementById("confirmgross_price").value = gross_price.toFixed(2);
+        document.getElementById("confirmgivenamount").value = givenamount.toFixed(2);
+        document.getElementById("confirmchange").value = change.toFixed(2);
+      }
+
+      function priceCopy(){
+        var gross_price = document.getElementById("payablePrice").value;
+        document.getElementById('payment').value= gross_price.substr(2);
+        calculatechange();
+        document.getElementById('payment').focus();
+      }
+
+      $('#paymentModel').on('shown.bs.modal', function () {
+        $('#payment').focus();
+      }) 
+
+      $('.list-group-item').click(function(e){
+        $('.list-group-item').css({"background-color": "white", "color":"black"});
+        $(this).css({"background-color": "#5fbeaa", "color":"white"});
+        $('#payment').focus();
+      });      
+      
+      function methodchange2cash(){
+        document.getElementById("confirmmethod").value = "cash";
+        document.getElementById('payment').value="";
+        setPaymentmodelPrice();
+      }
+
+      function methodchange2card(){
+        document.getElementById("payablePrice").value = document.getElementById('gross_price').innerHTML;
+		priceCopy();
+        document.getElementById("confirmmethod").value = "card";
+
+      }
+
+      $('#cartTable').Tabledit({
+	      url: 'deletecartitem.php',
+	      dataType:"json",
+	      columns: {
+	        identifier: [1, 'item'],
+	        editable: [[3, 'price']]
+	      },
+	      restoreButton:false,
+	      onAlways:function() {location.reload(true);},
+      });
+
+      $('#transactionList').Tabledit({
+	      url: 'deletetransaction.php',
+	      dataType:"json",
+	      columns: {
+	        identifier: [0, 'invoice'],
+	        editable: []
+	      },
+	      editButton:false,
+	      restoreButton:false,
+	      onAlways:function() {
+	      	//location.reload(true);
+	      },
+      });
+
+      function togglecategory(category){
+      	if(category!="Standard"){
+	        category = ".toggle" + category;
+	        var divided = category.split(" ");
+	        //console.log(divided[0]);
+
+	        $(divided[0]).show("slow", function() {}).siblings(".togglecategory").hide();
+        }else{
+        	$(".togglecategory").show();
+        }
+      }
+
+      //when menu box click pass variable to php
+      $('.box').click(function() {
+        var clickBtnValue = $(this).attr("value");
+        //console.log(clickBtnValue);
+        if(clickBtnValue == "Hot food($4)"
+        	||clickBtnValue == "product"
+        	||clickBtnValue == "Tomato"
+        	||clickBtnValue == "Apple"
+        	||clickBtnValue == "Carrot"
+        	||clickBtnValue == "Onion"
+        	||clickBtnValue == "Mushroom"
+        	||clickBtnValue == "banana"
+        	||clickBtnValue == "lemon_"
+        	||clickBtnValue == "redonion"
+        	||clickBtnValue == "capsicum"
+        	||clickBtnValue == "zucchini"
+        	||clickBtnValue == "Vegie"
+        	||clickBtnValue == "JOURNAL&CARD"
+        	){
+        	document.getElementById('selectedcalitem').value = clickBtnValue;
+        	$('#calculatorModal').modal('show');
+        }else{
+        	$.ajax({
+	          type: "POST",
+	          url: "addtocart.php",
+	          data: { name: clickBtnValue }
+	        }).done(function( msg ) {
+	          location.reload();
+	          //alert( "Data Saved: " + msg );
+	        });
+        }
+      });
+
+      $('.past_receipt').click(function() {
+      	var clickBtnValue = $(this).attr("value");
+      	
+      	$.ajax({
+	          type: "POST",
+	          url: "past_receipt.php",
+	          data: { date: clickBtnValue }
+	        }).done(function( msg ) {
+	        	document.getElementById('viewTransaction').innerHTML = msg;
+	        	$('#orderModal').modal('show');
+	        	//alert(msg);
+	        });
+      });
+
+      //transaction view
+      function transactionsopen(){
+        transactions_view = document.getElementById('transactions_view');
+        pos_view = document.getElementById('pos_view');
+
+        transactions_view.style.display = "inline";
+        pos_view.style.display = "none";
+      }
+
+      const transactionsBtn = document.getElementById('transactions');
+      const pointofsaleBtn = document.getElementById('pointofsale');
+      const transactions_view = document.getElementById('transactions_view');
+      const pos_view = document.getElementById('pos_view');
+
+      transactionsBtn.addEventListener("click", function(){
+        transactionsBtn.style.display = "none";
+        pointofsaleBtn.style.display = "inline";
+        transactions_view.style.display = "inline";
+        pos_view.style.display = "none";
+      });
+
+      pointofsaleBtn.addEventListener("click", function(){
+        transactionsBtn.style.display = "inline";
+        pointofsaleBtn.style.display = "none";
+        transactions_view.style.display = "none";
+        pos_view.style.display = "inline";
+      });
+
+	
+		function printdiv(printpage) {
+            var headstr = "<html><head><title></title></head><body>";
+            var footstr = "</body></html>";
+            var newstr = document.all.item(printpage).innerHTML;
+            var oldstr = document.body.innerHTML;
+            document.body.innerHTML = headstr + newstr + footstr;
+            window.print();
+            document.body.innerHTML = oldstr;
+            return false;
+        }
+
+   
+      //btn-group category color change
+      $(".category > button").on("click", function() {
+
+		  var defaultClass = "btn btn-outline-secondary btn-sm";
+		  var toBeAssignedClass = $(this).attr("data-btn-class");
+
+		  $(".btn-group > button").attr("class", defaultClass);
+		  $(this).attr("class", toBeAssignedClass);
+		});
+
+      //test function
+      function testfunction(){
+        console.log("<<<<<<<<<testfunction executed!!!!!!!!!!!!!!!!!!!1>>>>>>>>>>>");
+      }
+      
 
     // $(function () {
     //  "use strict";

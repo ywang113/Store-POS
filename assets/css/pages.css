@@ -1,11 +1,31 @@
-
 #transactions_view, #pointofsale {
   display: none;
 }
-
+#payablePrice{
+  text-align:center;
+  font-weight: bold;
+  font-size: large;
+}
 #card-box tr {display: block; }
-#card-box th, #card-box td:first-child{ width: 10px; }
-#card-box th, #card-box td:nth-child(2){ width: 150px; }
+#card-box th, #card-box td{ padding: 10px; }
+
+#calculatorModal td {
+    text-align: center;
+    vertical-align:middle;
+}
+
+#calculatorModal input {
+    text-align: right;
+    border: none;
+}
+#calculator_btn1 {
+  height:60px;
+  width:60px;
+  font-size:30px;
+}
+#skuCode:focus{
+	background-color:yellow;
+}
 
 #cartTable tbody { 
   display: block; 
@@ -17,9 +37,12 @@
   display: block; 
   height: calc(100vh - 215px);
   overflow: auto;
-  overflow: hidden;
+
 }
 
+#skuCode:focus {
+  background-color: yellow;
+}
 
 .order-box{
 background-color: grey;
@@ -34,11 +57,16 @@ color: #FFFFFF;
   border: 1px solid #f1f1f1;
 }
 
-#product_img {
-  max-height: 80px;
-  border-radius: 50%;
-  max-width: 100px;
+#parent .box:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
+
+#product_img2 {
+  height: 80px;
+  border-radius: 90%;
+  width: 100px;
+}
+
 
 #reportrange {
   background: #fff; 
