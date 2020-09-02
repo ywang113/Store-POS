@@ -66,7 +66,8 @@ if($row>0){
 		}
 		else{
 			// push new item into itemArray
-			selectedProductsArray.push(thisProduct)
+			//selectedProductsArray.push(thisProduct)
+			selectedProductsArray.unshift(thisProduct)
 		}
 		myStorage.setItem('selectedProductArray', JSON.stringify(selectedProductsArray))
 		// list items in cart view
