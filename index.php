@@ -13,7 +13,6 @@
     <link href="assets/plugins/dataTables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/dataTables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />    
     <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="./assets/js/poscontroll.js"></script>
     <?php
 	    include('functions.php');
 	    if(isset($_GET['error']))
@@ -262,18 +261,19 @@
                       </div>
                   </div>
                   <div>
-                      <table class="table m-0" id="cartTable">
+                      <table class="table m-0" id="cartTable"style = "display:block; min-width: 100% ; max-height: 600px ;overflow-y:scroll;">
   
-                          <thead>
+                          <thead class="cartList" id = "cartList">
                           <tr>
-                              <th>#</th>
+                              <th width="50px">#</th>
                               <th width="150px">Item</th>
-                              <th width="100px">Qty</th>
-                              <th>Price</th>
+                              <th width="120px" style="text-align:center;">Qty</th>
+                              <th width="100px">Price</th>
                               <th width="5px">
                                   <button data-toggle="modal" data-target="#cancelcart" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button>
                               </th>
                           </tr>
+                          <!-- add cart details -->
                           </thead>
                           <tbody>
                           	<?php listCart(); ?>
@@ -283,22 +283,16 @@
                   </div>
   
                   <hr>
-                 <div class="m-t-5">
+                 <div class="m-t-5" style="margin-bottom: 20px">
                      <div class="row">
-                         <div class="col-md-3">Total Item(s)</div>
-                         <div class="col-md-3">: <sapn id="total"><?php
-                            calculateitems();?></sapn></div>
-                         <div class="col-md-3">Price :</div>
-                         <div class="col-md-3">$ <span id="price"><?php
-                            calculateprice();?></span></div>
-                     </div>
-                     <div class="row">
-                         
-                        <div class="col-md-3">Gross Price</div>
-                        <div class="col-md-3"><h3 id="gross_price">$ 
+                         <div class="col-md-3"> <span style="font-weight:bold; font-size: 1em;">Total Item(s) :</span></div>
+                         <div class="col-md-3"> <span id="total"  style="font-weight:bold; font-size: 1em;"><?php
+                            calculateitems();?></span></div>
+                        <div class="col-md-3"> <span style="font-weight:bold; font-size: 1em;">Gross Price :</span></div>
+                        <div class="col-md-3"> <span id="gross_price" style="font-weight:bold; font-size: 1em;">
                          	<?php calculateprice();?>
-                         </h3>
-                     	</div>
+                        </span>
+                     	</div>  
                      </div>
   
                  </div>
@@ -1307,8 +1301,9 @@
     //   $('.customerOrderKeyboard').onscreenKeyboard({
 	//     allowTypingClass: 'holdCustomerOrderInput'
     //   });
-
+        var testresult = localStorage.getItem('test123')
+        console.log(testresult)
      </script>
-
+    <script type="text/javascript" src="./assets/js/cartControl.js"></script>
   </body>
 </html>
