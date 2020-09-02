@@ -593,12 +593,11 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <form id="cancelcartform" action="cancelcart.php">
-                            <div class="form-group">
-                                <label>Do you really want to cancel the order?</label>
-                            </div>
-                            <input type="submit" value="Yes" id="submitcancelcart" class="btn btn-primary btn-block waves-effect waves-light">
-                        </form>
+                        <div class="form-group">
+                          <label>Do you really want to cancel the order?</label>
+                        </div>
+                          <button type="button" id="submitcancelcart" class="btn btn-primary btn-block waves-effect waves-light" data-dismiss="modal" aria-hidden="true">OK</button>
+                          <!--input type="submit" value="Yes" id="submitcancelcart" class="btn btn-primary btn-block waves-effect waves-light"-->
                     </div>
                </div>
           </div>
