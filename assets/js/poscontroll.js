@@ -1,0 +1,4 @@
+
+
+// myStorage.clear()
+// clearCart()

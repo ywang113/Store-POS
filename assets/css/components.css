@@ -619,6 +619,7 @@ table.dataTable td.focus {
   outline: 3px solid #5fbeaa !important;
   outline-offset: -1px;
 }
+/* cart Table*/
 /* ColVid Tables */
 div.ColVis {
   float: none;
