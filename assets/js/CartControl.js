@@ -1,10 +1,12 @@
-/* Computer Click Part*/
+/* Add Item to Cart By Click the ItemBox */
+
 var productBoxs = document.getElementsByClassName("box");
 var myStorage = localStorage
 var existingProducts =  JSON.parse(myStorage.getItem('selectedProductArray'))
 var cancelCartBtn = document.getElementById('submitcancelcart')
-
 let itemQuantity = 1;
+
+// check whether selected Item is existing in the cart, return the index of selected item
 function isItemSelected(itemName){
     if(existingProducts != null){
         for(let i = 0; i < existingProducts.length ; i++){
@@ -19,70 +21,124 @@ function isItemSelected(itemName){
         return false
     }
 }
-
-function handleCartClick(i){
-let itemName = productBoxs[i].getAttribute('value')
-let itemPriceString = productBoxs[i].children[1].children[1].innerHTML.replace(/[^\d.]/g,'')
-let itemPrice = Number(itemPriceString)
-var index = isItemSelected(itemName)
-let thisProduct = {
-    'name' : itemName,
-    'price' : itemPrice,
-    'qty' : itemQuantity,
-    'subTotal' : itemPrice * itemQuantity
-}
-if(index!==false){
-        // change the item which index point to
-        selectedProductsArray[index] = {
-            'name' : itemName,
-            'price' : itemPrice,
-            'qty' : itemQuantity,
-            'subTotal' : itemPrice * itemQuantity,
-        }        
-}
-else{
-    //selectedProductsArray.push(thisProduct)
-    selectedProductsArray.unshift(thisProduct)
-}
-myStorage.setItem('selectedProductArray', JSON.stringify(selectedProductsArray))
-}
-
-cancelCartBtn.addEventListener('click',()=>{
-    clearCart()
-})
-
+// clear the selectedProductsArray, only called when cancelbtn is clicked
 function clearCart(){
     myStorage.removeItem('selectedProductArray')
     location.reload()
 }
 
-// see if there is no products in cart
+
+
+// Get selected item name , price; modify slectedProductsArray which stored in LocalStorage
+function handleCartClick(i,itemNamePostedByCalculator){
+    // another payment function, only apply to special products.
+                    /*  Special Product List
+                        "Take Away"
+                        "No Tax product"
+                        "product"
+                        "Tomato"
+                        "Apple"
+                        "Carrot"
+                        "Onion"
+                        "Mushroom"
+                        "banana"
+                        "lemon_"
+                        "redonion"
+                        "capsicum"
+                        "zucchini"
+                        "Vegie"
+                        "JOURNAL&CARD"
+                        "CHIPS"        */
+    if(itemNamePostedByCalculator !== undefined){
+        let itemPrice = document.getElementById('result').value.slice(2)
+        let itemName = itemNamePostedByCalculator
+        let thisProduct = 
+        {
+            'name' : itemName,
+            'price' : itemPrice,
+            'qty' : itemQuantity,
+            'subTotal' : itemPrice * itemQuantity
+        }
+        selectedProductsArray.unshift(thisProduct)
+    }
+    // code below only triggered when the second parameter is not passed, which means this function is called by clicking normal items
+    else{
+        let itemName = productBoxs[i].getAttribute('value')
+        if(itemName == "Take Away"
+        ||itemName == "No Tax product"
+        ||itemName == "product"
+        ||itemName == "Tomato"
+        ||itemName == "Apple"
+        ||itemName == "Carrot"
+        ||itemName == "Onion"
+        ||itemName == "Mushroom"
+        ||itemName == "banana"
+        ||itemName == "lemon_"
+        ||itemName == "redonion"
+        ||itemName == "capsicum"
+        ||itemName == "zucchini"
+        ||itemName == "Vegie"
+        ||itemName == "JOURNAL&CARD"
+        ||itemName == "CHIPS" ){
+        productname = document.getElementById('selectedcalitem').value;
+        return
+        }
+        let itemPriceString = productBoxs[i].children[1].children[1].innerHTML.replace(/[^\d.]/g,'')
+        let itemPrice = Number(itemPriceString)
+        var index = isItemSelected(itemName)
+        let thisProduct = 
+        {
+            'name' : itemName,
+            'price' : itemPrice,
+            'qty' : itemQuantity,
+            'subTotal' : itemPrice * itemQuantity
+        }
+        if(index!==false){
+            // change the item which index point to
+            selectedProductsArray[index] = 
+            {
+            'name' : itemName,
+            'price' : itemPrice,
+            'qty' : itemQuantity,
+            'subTotal' : itemPrice * itemQuantity,
+            }        
+        }
+        else
+        {
+            selectedProductsArray.unshift(thisProduct)
+        }
+    }
+    myStorage.setItem('selectedProductArray', JSON.stringify(selectedProductsArray))
+}
+
+
+// initialize the selectedProductsArray
 if(existingProducts != null){
     var selectedProductsArray = existingProducts
 }
 else{
     var selectedProductsArray = []
 }
-
-
-
-
+// bind handleCartClick function to each itemBox element
 for (let i = 0; i < productBoxs.length ; i++){
     //add event listener on each cart
     productBoxs[i].addEventListener('click', () => handleCartClick(i))
 
 }
+// bind clearCart function to each cancelCartBtn element
+cancelCartBtn.addEventListener('click',()=>{
+    clearCart()
+})
 
-// cancelcart btn event, clear localstorage
-
-
-/* Update Cart View Part */
+/* Update Cart View */
 
 const cartNode = document.getElementsByClassName('cartList')[0]
 const totalItemNode = document.getElementById('total')
 const totalPriceNode = document.getElementById('gross_price')
 let grossPrice = 0
 let totalQty = 0
+
+// delete targeted Item in the selectedProductsArray, refresh the page so that the view port will show updated data.; bind to the cancelItemBtn
 function deleteItem(i){
     updatedArray = selectedProductsArray.filter(function(value,index,arr){
         return index !== i
@@ -90,6 +146,8 @@ function deleteItem(i){
     myStorage.setItem('selectedProductArray',JSON.stringify(updatedArray))
     location.reload()
 }
+
+// minus targeted item quantity by 1 everytime the minusBtn is clicked, minimon quantity equals 1
 function minusItemQuantity(i){
     if(selectedProductsArray[i].qty > 1){
         selectedProductsArray[i].qty -= 1
@@ -102,6 +160,7 @@ function minusItemQuantity(i){
     location.reload()
 }
 
+// add targeted item quantity by 1 everytime the addBtn is clicked
 function addItemQuantity(i){
     selectedProductsArray[i].qty += 1
     selectedProductsArray[i].subTotal += selectedProductsArray[i].price
