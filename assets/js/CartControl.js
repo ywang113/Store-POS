@@ -2,6 +2,8 @@
 var productBoxs = document.getElementsByClassName("box");
 var myStorage = localStorage
 var existingProducts =  JSON.parse(myStorage.getItem('selectedProductArray'))
+var cancelCartBtn = document.getElementById('submitcancelcart')
+
 let itemQuantity = 1;
 function isItemSelected(itemName){
     if(existingProducts != null){
@@ -9,9 +11,6 @@ function isItemSelected(itemName){
             if(itemName === existingProducts[i].name){
                 itemQuantity = existingProducts[i].qty + 1
                 return i
-            }
-            else{
-                
             }
         }
         return false
@@ -42,13 +41,19 @@ if(index!==false){
         }        
 }
 else{
-    selectedProductsArray.push(thisProduct)
+    //selectedProductsArray.push(thisProduct)
+    selectedProductsArray.unshift(thisProduct)
 }
 myStorage.setItem('selectedProductArray', JSON.stringify(selectedProductsArray))
 }
 
+cancelCartBtn.addEventListener('click',()=>{
+    clearCart()
+})
+
 function clearCart(){
     myStorage.removeItem('selectedProductArray')
+    location.reload()
 }
 
 // see if there is no products in cart
@@ -67,6 +72,8 @@ for (let i = 0; i < productBoxs.length ; i++){
     productBoxs[i].addEventListener('click', () => handleCartClick(i))
 
 }
+
+// cancelcart btn event, clear localstorage
 
 
 /* Update Cart View Part */
