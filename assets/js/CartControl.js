@@ -50,7 +50,8 @@ function handleCartClick(i,itemNamePostedByCalculator){
                         "JOURNAL&CARD"
                         "CHIPS"        */
     if(itemNamePostedByCalculator !== undefined){
-        let itemPrice = document.getElementById('result').value.slice(2)
+        let itemPrice = Number(document.getElementById('result').value.slice(2))
+        alert (typeof(itemPrice))
         let itemName = itemNamePostedByCalculator
         let thisProduct = 
         {
