@@ -1038,7 +1038,9 @@
 			        function submitcalculator() {
 			        	var calculatedResult = document.getElementById('result').value.slice(2);
 			        	var productname = document.getElementById('selectedcalitem').value;
-			        	console.log(productname+"- submitcalculator:"+calculatedResult);
+                        console.log(productname+"- submitcalculator:"+calculatedResult);
+                        handleCartClick(10000,productname)
+
 			        	reset();
 
 			        	$.ajax({
