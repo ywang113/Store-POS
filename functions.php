@@ -1,17 +1,5 @@
 <?php
 
-$aa = sessioninit();
-function sessioninit(){
-	if(!session_id()){
-		session_start();
-		$_SESSION['session_user']="now set";
-		$_SESSION['cart']=array();
-		$_SESSION['item']=array();
-		$_SESSION['qty']=array();
-		$_SESSION['price']=array();
-	}
-}
-
 function categorybutton(){
 	include('./phps/db_conn.php');
 	$query = "SELECT * FROM category";
@@ -388,33 +376,8 @@ function optionCustomer(){
 	}
 }
 
-function listCart(){
-	$contents = "";
-	foreach($_SESSION['cart'] as $key=> $var){
-		$contents = '<tr id="cordinator"> 
-	            <td>'.$var["qty"].'</td>
-	            <td width="140px">'.$var["item"].'</td>
-	            <td width="60px">'.$var["qty"].'</td>
-	            <td>'.$var["price"].' $</td>
-	            </tr>'.$contents;
-	}
-	echo $contents;
-}
 
-function calculateitems(){
-	$contents = 0.0;
-	foreach($_SESSION['cart'] as list($id, $item, $qty, $price)){
-		$contents = $contents + intval($qty);
-	}
-	echo $contents;
-}
 
-function calculateprice(){
-	$contents = 0.0;
-	foreach($_SESSION['cart'] as list($id, $item, $qty, $price)){
-		$contents = $contents + intval($price);
-	}
-	echo round($contents,2);
-}
+
 
 ?>

@@ -261,7 +261,7 @@
                       </div>
                   </div>
                   <div>
-                      <table class="table m-0" id="cartTable"style = "display:block; min-width: 100% ; max-height: 600px ;overflow-y:scroll;">
+                      <table class="table m-0" id="cartTable" style = "display:block; min-width: 100% ; height: 700px ;overflow-y:scroll;">
   
                           <thead class="cartList" id = "cartList">
                           <tr>
@@ -275,9 +275,7 @@
                           </tr>
                           <!-- add cart details -->
                           </thead>
-                          <tbody>
-                          	<?php listCart(); ?>
-                          </tbody>
+                          
   
                       </table>
                   </div>
@@ -286,11 +284,9 @@
                  <div class="m-t-5" style="margin-bottom: 20px">
                      <div class="row">
                          <div class="col-md-3"> <span style="font-weight:bold; font-size: 1em;">Total Item(s) :</span></div>
-                         <div class="col-md-3"> <span id="total"  style="font-weight:bold; font-size: 1em;"><?php
-                            calculateitems();?></span></div>
+                         <div class="col-md-3"> <span id="total"  style="font-weight:bold; font-size: 1em;"></span></div>
                         <div class="col-md-3"> <span style="font-weight:bold; font-size: 1em;">Gross Price :</span></div>
                         <div class="col-md-3"> <span id="gross_price" style="font-weight:bold; font-size: 1em;">
-                         	<?php calculateprice();?>
                         </span>
                      	</div>  
                      </div>
@@ -696,71 +692,6 @@
      </div>
 
 
-     <!--
-     <div id="userModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="mySmallModalLabel">Account Infomarion
-                        <img  class="loading m-t-5" style="margin-left: 35%" height="50px" src="assets/images/loading.gif" alt="">
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <form id="saveUser" data-parsley-validate>
-                        <input type="hidden" name="id" id="user_id">
-                        <div class="form-group">
-                            <label for="userName">Name*</label>
-                            <input type="text" required="required"  name="fullname" parsley-trigger="change" placeholder="Enter name" class="form-control" id="fullname">
-                        </div>
-                        <div class="form-group">
-                            <label for="userName">Username*</label>
-                            <input type="text" name="username" parsley-trigger="change" placeholder="Login Username" class="form-control" id="username">
-                        </div>
-                        <div class="form-group">
-                            <label for="userName">Password</label>
-                            <input type="password" name="password" parsley-trigger="change" placeholder="Password" class="form-control" id="password">
-                        </div>
-                        <div class="form-group">
-                            <label for="userName">Repeat Password</label>
-                            <input type="password" name="pass" parsley-trigger="change" placeholder="Repeat" class="form-control" id="pass">
-                        </div>
-
-                        <div class="perms">
-
-                            <h4 style="font-size: 22px; margin-top: 20px;">Permissions</h4>
-                            <hr>
-    
-                            <div class="form-group">
-                                  <span><input type="checkbox" name="perm_products" id="perm_products"> Manage Products and Stock </span>
-                            </div>
-                            <div class="form-group">
-                                <span><input type="checkbox" name="perm_categories" id="perm_categories"> Manage Product Categories </span>
-                          </div>
-                          <div class="form-group">
-                            <span><input type="checkbox" name="perm_transactions" id="perm_transactions"> View Transactions </span>
-                           </div>
-                                <div class="form-group">
-                                    <span><input type="checkbox" name="perm_users" id="perm_users"> Manage Users and Permissions </span>
-                            </div>
-                            <div class="form-group">
-                                <span><input type="checkbox" name="perm_settings" id="perm_settings"> Manage Settings </span>
-                            </div>
-    
-                        </div>
-           
-                        <input type="submit" class="btn btn-primary btn-block waves-effect waves-light">
-                    </form>
-                </div>
-           </div>
-      </div>
- </div>
--->
-
-
-
-
-
  <div id="holdOrdersModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -779,7 +710,6 @@
         </div>
     </div>
 </div>
-
 
 
 
@@ -802,6 +732,8 @@
         </div>
     </div>
 </div>
+
+
 
 <div id="orderModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-sm">
@@ -839,34 +771,7 @@
                             <option>Standalone Point of Sale</option>
                         </select>
                  </div>
-                 <!--
-                <form id="net_settings_form">
-                 <div class="row">
-                    <div class="form-group">
-                        <label for="userName">Server IP Address*</label>
-                        <input type="text" required="required" placeholder="Enter the IP address of the admin computer." name="ip" class="form-control" id="ip">
-                    </div>
-                    <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="userName">Till Number*</label>
-                                    <input type="text" required="required" placeholder="Enter a number" name="till" class="form-control" id="till">
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label for="userName">Hardware Identification Number </label>
-                                    <input type="text" required="required" name="mac" class="form-control" id="mac" readonly="readonly">
-                                </div>
-                            </div>
-                    </div>
-                     <div class="form-group">
-                        <input id="save_settings" type="submit" class="btn btn-default btn-block waves-effect waves-light" value="Save Settings">
-                    </div>
-                 </div>
-                </form>
-                -->
-
+                 
 
                  <form id="settings_form" encType="multipart/form-data">
 
@@ -1032,25 +937,14 @@
 
 			        function reset() {
 			            document.getElementById('display').value = "";
-			            document.getElementById('result').value = "$ ";
+			            document.getElementById('result').value = "$ 0";
 			        }
 
 			        function submitcalculator() {
 			        	var calculatedResult = document.getElementById('result').value.slice(2);
 			        	var productname = document.getElementById('selectedcalitem').value;
-                        console.log(productname+"- submitcalculator:"+calculatedResult);
-                        handleCartClick(10000,productname)
-
+                handleCartClick(60,productname);
 			        	reset();
-
-			        	$.ajax({
-				          type: "POST",
-				          url: "addtakeawaytocart.php",
-				          data: { name:productname, price: calculatedResult }
-				        }).done(function( msg ) {
-				          location.reload();
-				          //alert( "Data Saved: " + msg );
-				        });
 			        }
 			    </script>
             </div>
@@ -1089,6 +983,7 @@
         var gross_price = document.getElementById('gross_price').innerHTML;
         gross_price= parseFloat(gross_price.slice(1));
         document.getElementById("payablePrice").value = "$ "+RoundTo(gross_price,0.05).toFixed(2);
+        //priceCopy();
       }
 
       function calculatechange(){
@@ -1129,8 +1024,17 @@
       }
 
       function methodchange2card(){
-        document.getElementById("payablePrice").value = document.getElementById('gross_price').innerHTML;
-		priceCopy();
+        var gross_price = document.getElementById('gross_price').innerHTML;
+        gross_price_numbonly= parseFloat(gross_price.slice(1));
+        gross_price= "$ "+ gross_price_numbonly.toFixed(2);
+        //payable Price Display
+        document.getElementById("payablePrice").value = gross_price;
+        //payment input Display
+        document.getElementById('payment').value= gross_price_numbonly;
+        //change display
+        calculatechange();
+        document.getElementById('payment').focus();
+        //method setting
         document.getElementById("confirmmethod").value = "card";
 
       }
@@ -1160,41 +1064,7 @@
         	$(".togglecategory").show();
         }
       }
-
-      //when menu box click pass variable to php
-      $('.box').click(function() {
-        var clickBtnValue = $(this).attr("value");
-        //console.log(clickBtnValue);
-        if(clickBtnValue == "Take Away"
-          ||clickBtnValue == "No Tax product"
-        	||clickBtnValue == "product"
-        	||clickBtnValue == "Tomato"
-        	||clickBtnValue == "Apple"
-        	||clickBtnValue == "Carrot"
-        	||clickBtnValue == "Onion"
-        	||clickBtnValue == "Mushroom"
-        	||clickBtnValue == "banana"
-        	||clickBtnValue == "lemon_"
-        	||clickBtnValue == "redonion"
-        	||clickBtnValue == "capsicum"
-        	||clickBtnValue == "zucchini"
-        	||clickBtnValue == "Vegie"
-        	||clickBtnValue == "JOURNAL&CARD"
-          ||clickBtnValue == "CHIPS"
-        	){
-        	document.getElementById('selectedcalitem').value = clickBtnValue;
-        	$('#calculatorModal').modal('show');
-        }else{
-        	$.ajax({
-	          type: "POST",
-	          url: "addtocart.php",
-	          data: { name: clickBtnValue }
-	        }).done(function( msg ) {
-	          location.reload();
-	          //alert( "Data Saved: " + msg );
-	        });
-        }
-      });
+     
 
       $('.past_receipt').click(function() {
       	var clickBtnValue = $(this).attr("value");
@@ -1284,26 +1154,7 @@
       function testfunction(){
         console.log("<<<<<<<<<testfunction executed!!!!!!!!!!!!!!!!!!!1>>>>>>>>>>>");
       }
-      
 
-    // $(function () {
-    //  "use strict";
-    //     jqKeyboard.init({
-    //         icon: "light"
-    //       });
-    //  });
- 
-
-    //  $('.holdOrderKeyboard').onscreenKeyboard({
-	//     allowTypingClass: 'holdOrderInput'
-    //   });
-
-
-    //   $('.customerOrderKeyboard').onscreenKeyboard({
-	//     allowTypingClass: 'holdCustomerOrderInput'
-    //   });
-        var testresult = localStorage.getItem('test123')
-        console.log(testresult)
      </script>
     <script type="text/javascript" src="./assets/js/cartControl.js"></script>
   </body>

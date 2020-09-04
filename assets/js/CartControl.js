@@ -32,26 +32,8 @@ function clearCart(){
 // Get selected item name , price; modify slectedProductsArray which stored in LocalStorage
 function handleCartClick(i,itemNamePostedByCalculator){
     // another payment function, only apply to special products.
-                    /*  Special Product List
-                        "Take Away"
-                        "No Tax product"
-                        "product"
-                        "Tomato"
-                        "Apple"
-                        "Carrot"
-                        "Onion"
-                        "Mushroom"
-                        "banana"
-                        "lemon_"
-                        "redonion"
-                        "capsicum"
-                        "zucchini"
-                        "Vegie"
-                        "JOURNAL&CARD"
-                        "CHIPS"        */
     if(itemNamePostedByCalculator !== undefined){
         let itemPrice = Number(document.getElementById('result').value.slice(2))
-        alert (typeof(itemPrice))
         let itemName = itemNamePostedByCalculator
         let thisProduct = 
         {
@@ -65,6 +47,7 @@ function handleCartClick(i,itemNamePostedByCalculator){
     // code below only triggered when the second parameter is not passed, which means this function is called by clicking normal items
     else{
         let itemName = productBoxs[i].getAttribute('value')
+        /*special product list*/
         if(itemName == "Take Away"
         ||itemName == "No Tax product"
         ||itemName == "product"
@@ -81,8 +64,10 @@ function handleCartClick(i,itemNamePostedByCalculator){
         ||itemName == "Vegie"
         ||itemName == "JOURNAL&CARD"
         ||itemName == "CHIPS" ){
-        productname = document.getElementById('selectedcalitem').value;
-        return
+            document.getElementById('selectedcalitem').value=itemName;
+            //productname = document.getElementById('selectedcalitem').value;
+            $('#calculatorModal').modal('show');
+            return
         }
         let itemPriceString = productBoxs[i].children[1].children[1].innerHTML.replace(/[^\d.]/g,'')
         let itemPrice = Number(itemPriceString)
@@ -110,6 +95,7 @@ function handleCartClick(i,itemNamePostedByCalculator){
         }
     }
     myStorage.setItem('selectedProductArray', JSON.stringify(selectedProductsArray))
+    location.reload()
 }
 
 
